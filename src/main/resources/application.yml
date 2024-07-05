@@ -26,10 +26,9 @@ spring:
 #          destination: input-topic
 #          group: input-group
 #          content-type: application/json
-        user-updated-0:
+        user-updated-out-0:
           destination: user-updated-event
-          content-type: application/json
-
+#          content-type: application/json
 #server:
 #  port: 8080
 #  servlet:
@@ -46,4 +45,4 @@ application:
 
 hazelcast:
   network:
-    address: localhost:5701
+    address: ${HAZELCAST_URL:localhost:5701}

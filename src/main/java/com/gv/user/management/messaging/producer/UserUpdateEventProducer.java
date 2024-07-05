@@ -14,6 +14,6 @@ public class UserUpdateEventProducer {
 
     public void sendMessage(final UserUpdatedEvent message) {
         log.info("send [UserUpdatedEvent] event: {}", message);
-        streamBridge.send("user-updated-0", message);
+        streamBridge.send("user-updated-out-0", message);
     }
 }
