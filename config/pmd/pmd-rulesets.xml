@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+
+<ruleset name="Custom ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>
+        The rulesets we want to use in pmd. For a detailed description of pmd rulesets:
+        http://pmd.sourceforge.net/rules/segmentNameIndex.html
+    </description>
+
+    <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
+        <exclude name="CommentRequired"/>
+        <exclude name="UncommentedEmptyMethodBody"/>
+        <exclude name="NoMandatoryConstructorInExceptionClass"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="FieldNamingConventions"/>
+        <exclude name="PrematureDeclaration"/>
+        <exclude name="UnnecessaryAnnotationValueElement"/>
+        <exclude name="LongVariable"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+        <!--        TODO remove when openapi is implemented-->
+        <exclude name="RestEndpointsWithoutExposedMetrics"/>
+        <exclude name="UseOpenApiInRestEndpoints"/>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="BeanMembersShouldSerialize"/>
+    </rule>
+    <rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals">
+        <properties>
+            <property name="skipAnnotations" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="GuardLogStatement"/>
+        <exclude name="JUnit4TestShouldUseBeforeAnnotation"/>
+    </rule>
+    <rule ref="category/java/security.xml"/>
+    <rule ref="category/java/performance.xml"/>
+
+    <rule ref="category/java/design.xml">
+        <exclude name="LawOfDemeter"/>
+        <exclude name="LoosePackageCoupling"/>
+    </rule>
+    <rule ref="category/java/design.xml/UseUtilityClass">
+        <properties>
+            <property name="ignoredAnnotations"
+                      value="org.springframework.boot.autoconfigure.SpringBootApplication|lombok.experimental.UtilityClass"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/TooManyFields">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration[matches(@Image, '^.*Event$')] |
+                      //Annotation//Name[@Image='Entity'] | //Annotation//Name[@Image='MappedSuperclass'] |
+                      //ClassOrInterfaceDeclaration[matches(@Image, '^.*Dto$')] |
+                      //ClassOrInterfaceDeclaration[matches(@Image, '^.*DTO*')]"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/AbstractClassWithoutAnyMethod">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration[matches(@Image, '^.*Event$')] |
+                      //Annotation//Name[@Image='Entity'] |
+                      //Annotation//Name[@Image='Configuration'] |
+                      //Annotation//Name[@Image='MappedSuperclass']"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration[matches(@Image, '^.*Event$')] |
+                      //Annotation//Name[@Image='Entity'] |
+                      //Annotation//Name[@Image='Configuration'] |
+                      //Annotation//Name[@Image='MappedSuperclass']"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/codestyle.xml/AtLeastOneConstructor">
+        <properties>
+            <property name="ignoredAnnotations" value="lombok.experimental.UtilityClass|lombok.Data|lombok.Value|
+            lombok.Builder|lombok.NoArgsConstructor|lombok.RequiredArgsConstructor|lombok.AllArgsConstructor"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/ShortMethodName">
+        <properties>
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+</ruleset>
