@@ -36,3 +36,36 @@ To run the application, use the following commands:
 ```bash
 ./gradlew bootRun
 ```
+
+### Using Docker Compose
+
+To run the application using Docker Compose, follow these steps:
+
+1. Clone the configuration repository:
+
+   ```bash
+   git clone https://github.com/giorgiodishvili/gv_configuration.git
+   cd gv_configuration
+2. run for SHELL
+```bash
+./build.sh
+
+```
+ run for WINDOWS
+```bat
+./build.bat
+
+```
+
+### Access swagger on: 
+http://localhost:8080/swagger-ui/index.html
+
+Endpoint for Registration: \
+http://localhost:8080/swagger-ui/index.html#/authentication-controller/register
+
+#### email should be valid 
+e.g. example@gmail.com
+#### password password should be valid uppercase, lowercase, a number and special char 
+e.g. Password123!
+
+#### Pass returned access_token to AUTHORIZATION header
