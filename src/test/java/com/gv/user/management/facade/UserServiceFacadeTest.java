@@ -65,8 +65,8 @@ class UserServiceFacadeTest {
 
     @Test
     void testUpdateUserSendsEvent() {
-        UserRequest request = new UserRequest();
-        UserResponse response = new UserResponse();
+        UserRequest request = DtoBuilder.buildUserRequest();
+        UserResponse response = DtoBuilder.buildUserResponse();
         when(userService.update(eq(1L), any(UserRequest.class))).thenReturn(response);
 
         userServiceFacade.update(1L, request);
@@ -82,8 +82,8 @@ class UserServiceFacadeTest {
 
     @Test
     void testUpdateAdminUserSendsEvent() {
-        AdminUserUpdateRequest request = new AdminUserUpdateRequest();
-        UserResponse response = new UserResponse();
+        AdminUserUpdateRequest request = DtoBuilder.buildAdminUserUpdateRequest();
+        UserResponse response = DtoBuilder.buildUserResponse();
         when(userService.update(eq(1L), any(AdminUserUpdateRequest.class))).thenReturn(response);
 
         userServiceFacade.update(1L, request);

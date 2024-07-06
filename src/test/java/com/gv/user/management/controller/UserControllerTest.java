@@ -65,7 +65,7 @@ class UserControllerTest {
         Mockito.reset(userService);
     }
 
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     @Test
     void testGetAll() throws Exception {
         UserResponse userResponse = DtoBuilder.buildUserResponse();
@@ -81,6 +81,18 @@ class UserControllerTest {
     }
 
     @WithMockUser
+    @Test
+    void testGetAllByUser() throws Exception {
+        UserResponse userResponse = DtoBuilder.buildUserResponse();
+        List<UserResponse> allUsers = new ArrayList<>();
+        allUsers.add(userResponse);
+        when(userService.getAll()).thenReturn(allUsers);
+
+        mockMvc.perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(roles = "ADMIN")
     @Test
     void testGetAllByPageable() throws Exception {
         UserResponse userResponse = DtoBuilder.buildUserResponse();
@@ -101,6 +113,22 @@ class UserControllerTest {
 
     @WithMockUser
     @Test
+    void testGetAllByPageableByUser() throws Exception {
+        UserResponse userResponse = DtoBuilder.buildUserResponse();
+        List<UserResponse> allUsers = new ArrayList<>();
+        allUsers.add(userResponse);
+        Page<UserResponse> page = new PageImpl<>(allUsers);
+        when(userService.getAll(any(PageRequest.class))).thenReturn(page);
+
+        mockMvc.perform(get("/api/users/page")
+                        .param("page", "0")
+                        .param("size", "1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(roles = "ADMIN")
+    @Test
     void testGetById() throws Exception {
         UserResponse userResponse = DtoBuilder.buildUserResponse();
         when(userService.getById(1L)).thenReturn(userResponse);
@@ -110,6 +138,16 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.firstname").exists());
 
         verify(userService, times(1)).getById(1L);
+    }
+
+    @WithMockUser
+    @Test
+    void testGetByIdByUser() throws Exception {
+        UserResponse userResponse = DtoBuilder.buildUserResponse();
+        when(userService.getById(1L)).thenReturn(userResponse);
+
+        mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 
     @WithMockUser(roles = "ADMIN")
